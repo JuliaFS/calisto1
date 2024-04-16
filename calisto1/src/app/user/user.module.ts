@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 
 
-
 @NgModule({
   declarations: [
     LoginComponent,
@@ -25,8 +24,6 @@ import { SharedModule } from '../shared/shared.module';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
-    
   ]
 })
 export class UserModule { }

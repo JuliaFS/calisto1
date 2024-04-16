@@ -10,9 +10,6 @@ import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './core/error/error.component';
-import { ModalComponent } from './shared/modal/modal.component';
-import { LoaderComponent } from './shared/loader/loader.component';
-import { EmailDirective } from './shared/validators/email.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 
@@ -23,9 +20,6 @@ import { SharedModule } from './shared/shared.module';
     FooterComponent,
     HomeComponent,
     ErrorComponent,
-    ModalComponent,
-    LoaderComponent,
-    EmailDirective
   ],
   imports: [
     BrowserModule,
