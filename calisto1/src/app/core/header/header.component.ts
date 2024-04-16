@@ -17,14 +17,14 @@ export class HeaderComponent {
 
 
   logout() {
-    this.auth.logout().subscribe({
-      next: () => {
-        this.router.navigate(['/home']);
-      },
-      error: () => {
-        this.router.navigate(['/auth/login']);
-      },
-    });
+    // this.auth.logout().subscribe({
+    //   next: () => {
+    //     this.router.navigate(['/home']);
+    //   },
+    //   error: () => {
+    //     this.router.navigate(['/auth/login']);
+    //   },
+    // });
   }
   
 }

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 import { FirebaseError } from 'firebase/app';
+
+//import { AngularFireAuth } from '@angular/fire/compat/auth';
+//import { FirebaseError } from 'firebase/app';
 
 import { Observable, catchError, from, tap, throwError } from 'rxjs';
 
@@ -21,9 +23,9 @@ export class AuthService {
   ) { }
 
       get isLogged(): boolean {
-        const user = this.afAuth.currentUser;
-        console.log('user: ')
-        console.log(user)
+        //const user = this.afAuth.currentUser;
+        //console.log('user: ')
+        //console.log(user)
         // const isLoggedIn = !!user;
         // //console.log('isloggedin: ' + isLoggedIn)
         // return isLoggedIn;
@@ -32,7 +34,7 @@ export class AuthService {
     }
 
 
-  register(email: string, password: string): Observable<any>{
+  register(email: string, password: string){
     return from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
       tap(user => console.log(user)),
       catchError((error: FirebaseError) => 
@@ -41,8 +43,8 @@ export class AuthService {
     );
   }
 
-  logout(): Observable<any> {
-    return from(this.afAuth.signOut());
+  logout(){ //logout(): Observable<any> {
+    //return from(this.afAuth.signOut());
   }
 
   private translateFirebaseErrorMessage({code, message}: FirebaseError) {
