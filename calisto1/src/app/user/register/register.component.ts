@@ -15,9 +15,10 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   serverMessage : string = '';
+  isAuthenticated : boolean = false;
 
   form = this.fb.group({
-    username: ['', ],
+    displayName: ['', ],
     email: ['', [Validators.required, emailValidator(EMAIL_DOMAINS)]],
     passGroup: this.fb.group(
       {
@@ -42,21 +43,21 @@ export class RegisterComponent {
 
   register(){
     if (this.form.invalid) {
+      this.serverMessage = "Pls fill all fields corectly..."
       return;
     }
     const {
           email,
+          displayName,
           passGroup: { password, rePassword } = {},
         } = this.form.value;
 
     this.auth
-        .register(email!, password!)
-        .subscribe({
+        .register(email!, displayName!, password!).subscribe({
           next: () => {
-          console.log('test from register function')
           this.router.navigate(['/home']);
-        },
-        error: (err) => this.serverMessage = err.message
-      });
+          },
+          error: (err) => this.serverMessage = err.message
+       });
   }
 }

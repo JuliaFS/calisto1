@@ -7,18 +7,19 @@
                 <li><a routerLink="company/company-list">Companies</a></li>
             </ul>
         </div>
-        <div *ngIf="!isLogged">
+        <div *ngIf="!isAuthenticated">
             <ul class="navigation">
                 <li><a routerLink="/auth/login">Login</a></li>
                 <li><a routerLink="/auth/register">Register</a></li>
             </ul>
         </div>
         <!--<div *ngIf="auth.user | async as user;">-->
-        <div *ngIf="isLogged">
+        <div *ngIf="isAuthenticated">
             <ul class="navigation">
                 <li><a routerLink="/company/add-company">Add Company</a></li>
                 <li><a routerLink="/auth/profile">Profile</a></li>
-                <li><a (click)="logout()">Logout</a></li>
+                <!--<li><a href="">{{displayName}}</a></li>-->
+                <li><a (click)="logout()"> Logout</a></li>
             </ul>
         </div>
     </nav>

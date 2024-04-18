@@ -1,0 +1,41 @@
+.register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+    gap: 0.2em;
+    width: 70%;
+}
+
+.input-container input{
+    padding: 10px 5px 10px 10px;
+    margin-bottom: 0.5em;
+
+    &:focus {
+        padding: 10px 5px 10px 10px;
+        outline: 0;
+        border-color: #ff7052;
+    }
+}
+.register div a{
+    color: black;
+}
+
+.error{
+    width: 70%;
+    padding: 10px 5px 10px 10px;
+    border: 1px solid red;
+    color: red;
+    text-align: left;
+    background-color: white;
+    font-size: 0.8em;
+}

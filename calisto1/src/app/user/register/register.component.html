@@ -1,23 +1,27 @@
-<p>register works!</p>
 <div class="container">
     <form class="register" [formGroup]="form" (ngSubmit)="register()">
         <div>
             <h2>Register</h2>
         </div>
+        <ng-container *ngIf="serverMessage!=''">
+            <p class="error">
+              {{serverMessage}}
+            </p>
+          </ng-container>
         <div class="input-container">
-            <label for="username">Username</label>
+            <label for="displayName">Username</label>
             <input type="text" 
-            id="username" 
-            name="username" 
+            id="displayName" 
+            name="displayName" 
             placeholder="Enter username here..." 
-            formControlName="username">
+            formControlName="displayName">
 
-            <ng-container *ngIf="form.get('username')?.touched">
-                <p class="error" *ngIf="form.get('username')?.errors?.['required']">
+            <ng-container *ngIf="form.get('displayName')?.touched">
+                <p class="error" *ngIf="form.get('displayName')?.errors?.['required']">
                     Username is required!
                 </p>
 
-                <p class="error" *ngIf="form.get('username')?.errors?.['minlength']">
+                <p class="error" *ngIf="form.get('displayName')?.errors?.['minlength']">
                     Username must be at least 2 characters!
                 </p>
             </ng-container>
@@ -81,12 +85,7 @@
             </div>
 
         </ng-container>
-        <button>Register</button>
-        <ng-container *ngIf="serverMessage!=''">
-            <p class="error">
-              {{serverMessage}}
-            </p>
-          </ng-container>
+        <button class="submit-btn">Register</button>
         <div>
             <a routerLink="/auth/login">Alreay have Account?</a>
         </div>

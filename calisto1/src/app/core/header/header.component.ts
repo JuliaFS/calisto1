@@ -1,30 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/auth.service';
+import { AngularFireAuth  } from '@angular/fire/compat/auth';
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  constructor(public auth: AuthService, private router: Router) {};
+export class HeaderComponent implements OnInit {
+  //displayName : string | null = null;
+  isAuthenticated : boolean = false;
+  //user: firebase.User | null = null;
 
+  constructor(public auth: AuthService, fireAuth: AngularFireAuth, private router: Router) {};
 
-  get isLogged(): boolean {
-    return this.auth.isLogged;
+  // get displayName(){
+  //   // console.log('from header: ' + this.auth.getDisplayName())
+  //    return this.auth.getDisplayName();
+  // }
+
+  ngOnInit(): void {
+    this.auth.currentAuthStatus$.subscribe(authStatus => this.isAuthenticated = authStatus);
   }
 
 
   logout() {
-    // this.auth.logout().subscribe({
-    //   next: () => {
-    //     this.router.navigate(['/home']);
-    //   },
-    //   error: () => {
-    //     this.router.navigate(['/auth/login']);
-    //   },
-    // });
+    this.auth.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/home']);
+      },
+      error: () => {
+        this.router.navigate(['/auth/login']);
+      },
+    });
   }
   
 }
