@@ -50,10 +50,11 @@ body{
         margin: 0.8em 0em;
         border: none;
         cursor: pointer;
-}
-.submit-btn:hover{
-    color: #4257a2;
-    background-color: aliceblue;
+
+        &:hover{
+            color: #4257a2;
+            background-color: aliceblue;
+        }
 }
 
 .error{

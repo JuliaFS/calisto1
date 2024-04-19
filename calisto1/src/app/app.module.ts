@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './core/error/error.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
     FooterComponent,
     HomeComponent,
     ErrorComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

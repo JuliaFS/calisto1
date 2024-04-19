@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/home' },
@@ -14,8 +15,8 @@ const routes: Routes = [
   //   loadChildren: () => import('./company/company.module').then((m) => m.CompanyModule),
   // },
   // { path: 'error', component: ErrorComponent },
-  // { path: '**', redirectTo: '/404' },
-  // { path: '404', component: NotFoundComponent },
+   { path: '**', redirectTo: '/404' },
+   { path: '404', component: NotFoundComponent },
 ];
 
 @NgModule({
