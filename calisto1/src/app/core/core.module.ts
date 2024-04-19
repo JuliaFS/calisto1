@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 
 import { FooterComponent } from './footer/footer.component';
 import { ErrorComponent } from './error/error.component';
+import { HeaderComponent } from './header/header.component';
 
 
 
 @NgModule({
   declarations: [
+    HeaderComponent,
     FooterComponent,
     ErrorComponent
   ],
@@ -19,7 +21,7 @@ import { ErrorComponent } from './error/error.component';
   exports: [
     HeaderComponent,
     FooterComponent,
-    ErrorComponent
+    ErrorComponent,
   ]
 })
 export class CoreModule { }

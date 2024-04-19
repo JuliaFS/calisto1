@@ -75,7 +75,6 @@ login(email: string, password: string): Observable<any>{
     )
   );
 }
-
   // //sign in with google
   googleSignIn(){
       return this.afAuth.signInWithPopup(new GoogleAuthProvider).then((res) => {
@@ -85,6 +84,16 @@ login(email: string, password: string): Observable<any>{
         alert(err.message);
       })
      }
+
+         //forgot password
+    forgotPassword(email: string): Observable<any> {
+      return from(this.afAuth.sendPasswordResetEmail(email))
+      .pipe(
+        catchError((error: FirebaseError) => 
+          throwError(() => new Error(this.translateFirebaseErrorMessage(error)))
+        )
+      )
+    }
 
   logout(): Observable<any> {
    // this.isAuthenticated = false;
