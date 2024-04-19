@@ -21,6 +21,15 @@ body{
     color: #4257a2;
 }
 
+.inner-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7em;
+    width: 100%;
+}
+
 .container h2{
     text-transform: uppercase;
     font-weight: bold;
@@ -41,7 +50,17 @@ body{
         border: none;
         cursor: pointer;
 }
-button:hover{
+.submit-btn:hover{
     color: #4257a2;
     background-color: aliceblue;
+}
+
+.error{
+    width: 70%;
+    padding: 10px 5px 10px 10px;
+    border: 1px solid red;
+    color: red;
+    text-align: left;
+    background-color: white;
+    font-size: 0.8em;
 }

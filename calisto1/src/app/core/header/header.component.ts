@@ -17,10 +17,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(public auth: AuthService, fireAuth: AngularFireAuth, private router: Router) {};
 
-  // get displayName(){
-  //   // console.log('from header: ' + this.auth.getDisplayName())
-  //    return this.auth.getDisplayName();
-  // }
+  get displayName(): string | null{
+    console.log('from header: ' + this.auth.getUserDisplayName())
+     return this.auth.getUserDisplayName();
+  }
 
   ngOnInit(): void {
     this.auth.currentAuthStatus$.subscribe(authStatus => this.isAuthenticated = authStatus);

@@ -1,1 +1,66 @@
-<p>login works!</p>
+<div class="container">
+    <form class="inner-container" #form="ngForm" (ngSubmit)="login(form)">
+            <h2>Login</h2>
+        <div class="input-container">
+            <label for="email">Email</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="Enter email here..."
+                ngModel
+                #inputEmail="ngModel"
+                required
+            >
+        </div>
+    <ng-container *ngIf="inputEmail.touched">
+      <p class="error" *ngIf="inputEmail.errors?.['required']">
+        Email is required!
+      </p>
+      <p class="error" *ngIf="inputEmail.errors?.['emailValidator']">
+        Email is not valid!
+      </p>
+    </ng-container>
+
+        <div class="input-container">
+            <label for="password">Password</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Enter your password here..."
+                ngModel
+                #inputPassword="ngModel"
+                required
+                minlength="5"
+            >
+        </div>
+        <ng-container *ngIf="inputPassword.touched">
+            <p class="error" *ngIf="inputPassword.errors?.['required']">
+              Password is required!
+            </p>
+            <p class="error" *ngIf="inputPassword.errors?.['minlength']">
+              Password must be at least 5 characters!
+            </p>
+          </ng-container>
+
+        <button class="submit-btn">Login</button>
+        <ng-container *ngIf="serverMessage!=''">
+          <p class="error">
+            {{serverMessage}}
+          </p>
+        </ng-container>
+        <div>
+            <a href="/auth/register">Need Account?</a>
+        </div>
+        <div>
+            <a href="/auth/forgot-password">Forgot password?</a>
+        </div>
+        <div class="google-login">
+            <a (click)="signInWithGoogle()">
+                <img src="../../../assets/icons8-google-48.png" height="24px" width="24px" alt="Google icon"/>
+                <span>Sign in with Google</span>
+            </a>
+        </div>
+    </form>
+</div>

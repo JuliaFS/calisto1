@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { EMAIL_DOMAINS } from 'src/app/constants';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +13,7 @@ export class LoginComponent {
   domains = EMAIL_DOMAINS;
   serverMessage : string = '';
 
-  constructor(private auth: AuthService, private router: Router, private location: Location){}
+  constructor(private auth: AuthService, private router: Router){}
 
   login(form: NgForm){
 
