@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import { Firestore, FirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +30,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    // provideFirestore(() => getFirestore()),
+    // provideStorage(() => getStorage()),
+    AngularFirestoreModule,
+    FirestoreModule,
     FormsModule,
     ReactiveFormsModule,
   ],

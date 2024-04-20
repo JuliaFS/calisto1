@@ -38,6 +38,25 @@ body{
     border-bottom: 2px solid #4257a2;
     margin-bottom: 0.5em;
 }
+.input-container{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+    gap: 0.2em;
+    width: 70%;
+}
+
+.input-container input{
+    padding: 10px 5px 10px 10px;
+    margin-bottom: 0.5em;
+
+    &:focus {
+        padding: 10px 5px 10px 10px;
+        outline: 0;
+        border-color: #ff7052;
+    }
+}
 
 .submit-btn{
         padding: 12px 5px 12px 10px;

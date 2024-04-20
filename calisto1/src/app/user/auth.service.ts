@@ -1,15 +1,28 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getAuth, updateProfile, createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, updateProfile } from "firebase/auth";
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { Router } from '@angular/router';
-import { FirebaseError } from 'firebase/app';
+import { FirebaseError} from 'firebase/app';
+
+
+import {
+  collection,
+  doc,
+  docData,
+  Firestore,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 
 //import { AngularFireAuth } from '@angular/fire/compat/auth';
 //import { FirebaseError } from 'firebase/app';
 
-import { BehaviorSubject, Observable, catchError, from, map, switchMap, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, from, map, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../shared/types/user';
+import { ProfileUser } from '../shared/types/userProfile';
 
 
 @Injectable({
@@ -19,10 +32,19 @@ export class AuthService {
 
   constructor( 
     private afAuth: AngularFireAuth,
+    private afStore: AngularFirestore,
     private router: Router, 
   ) { 
     this.authStatusListener(); 
+    this.afAuth.authState.subscribe(user => console.log('Auth state:', user?.uid));
   }
+
+  
+
+  //currentUser$ = this.afAuth.authState;
+  // getCurrentUser(): Observable<firebase.default.User | null> {
+  //   return this.afAuth.authState;
+  // }
 
   currentUser : any = null;
   private authStatusSub = new BehaviorSubject(this.currentUser);
@@ -41,27 +63,54 @@ export class AuthService {
     })
   }
 
-  getUserDisplayName(){
+  // getCurrentUser(): Observable<firebase.default.User | null> {
+  //   return this.afAuth.authState;
+  // }
+
+  getCurrentUserUid(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      tap(user => console.log('User:', user?.uid)),
+      map(user => user ? user.uid : '')
+    );
+  }
+
+  // getCurrentUserUidSync(): string {
+  //   const user = this.afAuth.authState.pipe(
+  //     map(user => user ? user.uid : '')
+  //   );
+  // }
+
+  getUserEmail(): string | null{
     const auth = getAuth();
     const user = auth.currentUser;
     
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
-      return user.displayName;
+      return user.email;
     } else {
-      return null;
+      return '';
+            // No user is signed in.
+    }
+  }
+
+  getUserUid(): string{
+    const auth = getAuth();
+    const user = auth.currentUser;
+    
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      console.log('uid from auth servise: ' + user.uid)
+      return user.uid;
+    } else {
+      return '';
             // No user is signed in.
     }
   }
 
   register(email: string, displayName: string, password: string): Observable<any>{
-    return from(this.afAuth.createUserWithEmailAndPassword(email, password)
-    .then(response => {
-        //   //this.isAuthenticated = true;
-          response.user?.updateProfile({displayName: displayName});
-        })
-    );
+    return from(this.afAuth.createUserWithEmailAndPassword(email, password));
   }
 
   login(email: string, password: string): Observable<any>{
@@ -90,6 +139,69 @@ export class AuthService {
         )
       )
     }
+
+    //....................................
+    // addCompany(company: Company){
+    //   company.id = this.afs.createId();
+      
+    //   return this.afs.collection('/Companies').add(company);
+    // }
+    // getCompanyById(id : string){
+    //   return this.afs.collection('Companies').doc(id).valueChanges();
+    // }
+  
+    // getOwnerUid(id: any){
+    //  return this.afs.collection('Companies').doc(id).snapshotChanges();
+    // }
+  
+    // //get all companies
+    // getAllCompanies(){
+    //   return this.afs.collection('Companies').snapshotChanges();
+      
+    // }
+  
+    // delete(id: string): Promise<void> {
+    //   return this.afs.collection('Companies').doc(id).delete();
+    // }
+  
+    //  //update company 2
+    //    update(id: string, data: any): Promise<void> {
+    //   return this.afs.collection('Companies').doc(id).update(data);
+    // }
+    //..............................................
+
+  createUserProfileDocument(uid: string, data: ProfileUser): Promise<void> {
+      // Set up Firestore document for user
+      return this.afStore.collection('users').doc(uid).set(data);
+    }
+
+    getUserProfile(id: string){
+        return this.afStore.collection('users').doc(id).valueChanges();
+    }
+
+    //---------
+    saveProfile(displayName: string, firstName: string, lastName: string, phone: string, address: string){
+      // this.afAuth.currentUser.then( user => {
+      //   user?.updateProfile({displayName, firstName, lastName, phone, address})
+      // })
+    }
+
+    // setUserDocument(uid: string): Observable<any> {
+    //   // return this.firestore.collection('users').doc(uid).set(data);
+    //   return this.afStore.collection('users').doc(uid).set({displayName: displayName, firstName, lastName, phone, address});
+    // }
+
+
+     // updateProfile(profileData: Partial<UserInfo>): Observable<any> {
+  //   const user = this.auth.currentUser;
+  //   return of(user).pipe(
+  //     concatMap((user) => {
+  //       if (!user) throw new Error('Not authenticated');
+
+  //       return updateProfile(user, profileData);
+  //     })
+  //   );
+  // }
 
   logout(): Observable<any> {
     return from(this.afAuth.signOut());
