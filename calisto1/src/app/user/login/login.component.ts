@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { EMAIL_DOMAINS } from 'src/app/constants';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -7,7 +8,15 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  animations: [
+    trigger('login', [
+      state('void', style({
+        transform: 'translateX(-100%)'
+      })),
+      transition('void <=> *', animate('0.5s ease-in'))
+    ]),
+  ]
 })
 export class LoginComponent {
   domains = EMAIL_DOMAINS;

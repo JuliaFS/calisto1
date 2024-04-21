@@ -36,7 +36,7 @@ export class AuthService {
     private router: Router, 
   ) { 
     this.authStatusListener(); 
-    this.afAuth.authState.subscribe(user => console.log('Auth state:', user?.uid));
+    //this.afAuth.authState.subscribe(user => console.log('Auth state:', user?.uid));
   }
 
   
@@ -69,7 +69,7 @@ export class AuthService {
 
   getCurrentUserUid(): Observable<string> {
     return this.afAuth.authState.pipe(
-      tap(user => console.log('User:', user?.uid)),
+      //tap(user => console.log('User:', user?.uid)),
       map(user => user ? user.uid : '')
     );
   }
@@ -170,13 +170,13 @@ export class AuthService {
     // }
     //..............................................
 
-  createUserProfileDocument(uid: string, data: ProfileUser): Promise<void> {
+  createUserProfileDocument(uid: string, data: ProfileUser): Observable<any> {
       // Set up Firestore document for user
-      return this.afStore.collection('users').doc(uid).set(data);
+      return from(this.afStore.collection('users').doc(uid).set(data));
     }
 
-    getUserProfile(id: string){
-        return this.afStore.collection('users').doc(id).valueChanges();
+    getUserProfile(id: string): Observable<any>{
+        return from(this.afStore.collection('users').doc(id).valueChanges());
     }
 
     //---------

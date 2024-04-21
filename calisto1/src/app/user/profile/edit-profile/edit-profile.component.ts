@@ -24,6 +24,10 @@ export class EditProfileComponent {
     address: '',
   };
 
+  getUserEmail() : string | null{
+    return this.auth.getUserEmail();
+  }
+
   constructor(
     //private imageUploadService: ImageUploadService,
     //private toast: HotToastService,
@@ -36,11 +40,6 @@ export class EditProfileComponent {
   ngOnInit(): void {
    
   }
-
-  getUserEmail() : string | null{
-    return this.auth.getUserEmail();
-  }
-
 
   saveProfile(form: NgForm){
 
@@ -64,13 +63,17 @@ export class EditProfileComponent {
     //this.companyObj.owner = this.ownerVar;
     
     this.auth.createUserProfileDocument(this.profileObj.uid, this.profileObj)
-    .then(() => {
-      console.log(this.profileObj)
-      //this.resetForm();
-      this.router.navigate(['/company/company-list']);
-    }, err => {
-      console.log(err.message);
-      this.serverMessage = err.message;
-    } );
+    .subscribe({
+      next: () =>   this.router.navigate(['/auth/profile']),
+      error: (err) => this.serverMessage = err.message
+    })
+    // .then(() => {
+    //   console.log(this.profileObj)
+    //   //this.resetForm();
+    //   this.router.navigate(['/company/company-list']);
+    // }, err => {
+    //   console.log(err.message);
+    //   this.serverMessage = err.message;
+    // } );
   }
 }

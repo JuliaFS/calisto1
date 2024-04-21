@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.currentAuthStatus$.subscribe(authStatus => this.isAuthenticated = authStatus);
+     this.auth.currentAuthStatus$.subscribe(authStatus => this.isAuthenticated = authStatus);
   }
 
 
