@@ -5,14 +5,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent }, //canActivate: [AuthActivate]
   { path: 'register', component: RegisterComponent },//canActivate: [FormAuthGuard] 
   { path: 'profile', component: ProfileComponent },
-  { path: 'edit-profile', component: EditProfileComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
 ];
 

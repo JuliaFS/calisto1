@@ -13,18 +13,22 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 export class HeaderComponent implements OnInit {
   //displayName : string | null = null;
   isAuthenticated : boolean = false;
+  email: string = '';
   //user: firebase.User | null = null;
 
   constructor(public auth: AuthService, fireAuth: AngularFireAuth, private router: Router) {};
 
-  get displayUserEmail(): string | null{
-     return this.auth.getUserEmail();
-  }
+  // get displayUserEmail(): string | null{
+  //    return this.auth.getUserEmail();
+  // }
 
   ngOnInit(): void {
-     this.auth.currentAuthStatus$.subscribe(authStatus => this.isAuthenticated = authStatus);
+     //this.auth.currentAuthStatus$.subscribe(authStatus => this.isAuthenticated = authStatus);
+     this.auth.currentAuthStatus$.subscribe(authStatus => {
+      this.isAuthenticated = authStatus;
+      this.email = authStatus.email;
+  });
   }
-
 
   logout() {
     this.auth.logout().subscribe({

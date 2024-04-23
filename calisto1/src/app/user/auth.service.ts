@@ -22,7 +22,7 @@ import {
 //import { FirebaseError } from 'firebase/app';
 
 import { BehaviorSubject, Observable, catchError, from, map, of, switchMap, tap, throwError } from 'rxjs';
-//import { User } from '../shared/types/user';
+import { User } from '../shared/types/user';
 import { ProfileUser } from '../shared/types/userProfile';
 
 
@@ -74,12 +74,12 @@ export class AuthService {
   //   return this.afAuth.authState;
   // }
 
-  getCurrentUserUid(): Observable<string> {
-    return this.afAuth.authState.pipe(
-      //tap(user => console.log('User:', user?.uid)),
-      map(user => user ? user.uid : '')
-    );
-  }
+  // getCurrentUserUid(): Observable<string> {
+  //   return this.afAuth.authState.pipe(
+  //     //tap(user => console.log('User:', user?.uid)),
+  //     map(user => user ? user.uid : '')
+  //   );
+  // }
 
   // getCurrentUserUidSync(): string {
   //   const user = this.afAuth.authState.pipe(
@@ -87,19 +87,19 @@ export class AuthService {
   //   );
   // }
 
-  getUserEmail(): string | null{
-    const auth = getAuth();
-    const user = auth.currentUser;
+  // getUserEmail(): string | null{
+  //   const auth = getAuth();
+  //   const user = auth.currentUser;
     
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      return user.email;
-    } else {
-      return '';
-            // No user is signed in.
-    }
-  }
+  //   if (user) {
+  //     // User is signed in, see docs for a list of available properties
+  //     // https://firebase.google.com/docs/reference/js/auth.user
+  //     return user.email;
+  //   } else {
+  //     return '';
+  //           // No user is signed in.
+  //   }
+  // }
 
   getUserUid(): string{
     const auth = getAuth();

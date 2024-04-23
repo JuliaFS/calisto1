@@ -9,7 +9,6 @@ import { LoginComponent } from './login/login.component';
 import { UserRoutingModule } from './user-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 
 @NgModule({
@@ -18,7 +17,6 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
     RegisterComponent,
     ForgotPasswordComponent,
     ProfileComponent,
-    EditProfileComponent
   ],
   imports: [
     CommonModule,
