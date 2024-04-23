@@ -27,7 +27,7 @@
                 id="displatName" 
                 name="displayName" 
                 placeholder="Enter your nickname here..."
-                ngModel 
+                [ngModel]="userInfo.displayName" 
                 #inputDisplayName="ngModel" 
                 minlength="3"
             >

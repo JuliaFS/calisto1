@@ -8,24 +8,7 @@
               {{serverMessage}}
             </p>
           </ng-container>
-        <div class="input-container">
-            <label for="displayName">Username</label>
-            <input type="text" 
-            id="displayName" 
-            name="displayName" 
-            placeholder="Enter username here..." 
-            formControlName="displayName">
-
-            <ng-container *ngIf="form.get('displayName')?.touched">
-                <p class="error" *ngIf="form.get('displayName')?.errors?.['required']">
-                    Username is required!
-                </p>
-
-                <p class="error" *ngIf="form.get('displayName')?.errors?.['minlength']">
-                    Username must be at least 2 characters!
-                </p>
-            </ng-container>
-        </div>
+         
         <div class="input-container">
             <label for="email">Email</label>
             <input type="email" 

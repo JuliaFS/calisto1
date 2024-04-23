@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, GoogleAuthProvider, updateProfile } from "firebase/auth";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
+
 import { Router } from '@angular/router';
 import { FirebaseError} from 'firebase/app';
 
@@ -21,7 +22,7 @@ import {
 //import { FirebaseError } from 'firebase/app';
 
 import { BehaviorSubject, Observable, catchError, from, map, of, switchMap, tap, throwError } from 'rxjs';
-import { User } from '../shared/types/user';
+//import { User } from '../shared/types/user';
 import { ProfileUser } from '../shared/types/userProfile';
 
 
@@ -64,6 +65,12 @@ export class AuthService {
   }
 
   // getCurrentUser(): Observable<firebase.default.User | null> {
+  //   return this.afAuth.authState.pipe(
+  //     map(user => user ? user.uid : null)
+  //   );
+  // }
+
+  // getCurrentUser(): Observable<User | null> {
   //   return this.afAuth.authState;
   // }
 

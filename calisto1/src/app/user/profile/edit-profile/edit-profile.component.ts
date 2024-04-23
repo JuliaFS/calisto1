@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
@@ -11,12 +11,13 @@ import { Router } from '@angular/router';
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css']
 })
-export class EditProfileComponent {
+export class EditProfileComponent implements OnInit{
+  userInfo : any = [];
   serverMessage : string = '';
-  //user$ = this.auth.getCurrentUser;
-  profileForm : ProfileUser[] = [];
+  uid : string = this.auth.getUserUid();
+
   profileObj : ProfileUser = {
-    uid: this.auth.getUserUid(),
+    uid: '',
     displayName: '',
     firstName: '',
     lastName: '',
@@ -35,10 +36,16 @@ export class EditProfileComponent {
     private auth: AuthService,
     private router: Router,
     private fb: NonNullableFormBuilder
-  ) {}
+  ) {
+    //this.auth.currentAuthStatus$.subscribe(user => this.uid = user.uid);
+  }
 
   ngOnInit(): void {
-   
+    console.log('user uid in edit-profile: ' + this.uid)
+    this.auth.getUserProfile(this.uid).subscribe({
+      next: (user) => this.userInfo = user,
+      error: (err) => this.serverMessage = err.message
+    })
   }
 
   saveProfile(form: NgForm){

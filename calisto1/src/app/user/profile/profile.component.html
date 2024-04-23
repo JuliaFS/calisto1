@@ -1,15 +1,149 @@
-<section class="profile-main-container" @profile>
-    <div>
-        <h1>User profile page</h1>
-    </div>
-    <section class="profile-container">
-        <div><img src="../../../assets/profile.png"></div>
-        <section class="profile-info-container">
-            <p>{{userInfo.displayName}}</p>
-            <p>{{userInfo.firstName}}</p>
-            <p>{{userInfo.lastName}}</p>
-            <p>{{userInfo.phone}}</p>
-            <p>{{userInfo.address}}</p>
+<section class="profile-main-container">
+    <section *ngIf="isOpen" class="profile-info" @profile>
+        <div class="profile-header">
+            <h1>User profile</h1>
+        </div>
+        <section class="profile-section">
+            <div>
+                <div class="img-container">
+                    <img src="../../../assets/profile.png">
+                </div>
+                <div>
+                    <label for="avatar">Choose a profile picture:</label>
+                    <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
+                </div>
+            </div>
+            <section class="profile-info-container">
+                <p>Nickname: <span class="bold">{{userInfo?.displayName}}</span></p>
+                <p>First name: <span class="bold">{{userInfo?.firstName}}</span></p>
+                <p>Last name: <span class="bold">{{userInfo?.lastName}}</span></p>
+                <p>Phone: <span class="bold">{{userInfo?.phone}}</span></p>
+                <p>Address: <span class="bold">{{userInfo?.address}}</span></p>
+            </section>
         </section>
+        <div class="profile-btn">
+            <button class="submit-btn" (click)="editProfile()">Edit</button>
+        </div>
     </section>
+    <div *ngIf="!isOpen" class="profile-container" @profileContainer>
+        <div class="profile-header">
+            <h1>Edit profile</h1>
+        </div>
+        <form class="inner-container" #form="ngForm">
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                [ngModel]="email" 
+                disabled="disabled"
+            >
+            </div>
+        <!-- <ng-container *ngIf="inputEmail.touched">
+                <p class="error" *ngIf="inputEmail.errors?.['required']">
+                    Email is required!
+                </p>
+                <p class="error" *ngIf="inputEmail.errors?.['emailValidator']">
+                    Email is not valid!
+                </p>
+            </ng-container>-->
+            <div class="input-container">
+                <label for="displayName">Display name</label>
+                <input 
+                    type="displayName" 
+                    id="displatName" 
+                    name="displayName" 
+                    placeholder="Enter your nickname here..."
+                    [ngModel]="userInfo?.displayName" 
+                    #inputDisplayName="ngModel" 
+                >
+            </div>
+
+           <!-- <ng-container *ngIf="inputDisplayName.touched">
+                <p class="error" *ngIf="inputDisplayName.errors?.['minlength']">
+                    Nickname must be at least 3 characters!
+                </p>
+            </ng-container>-->
+
+            <div class="input-container">
+                <label for="firstName">First name</label>
+                <input 
+                type="firstName" 
+                id="firstName" 
+                name="firstName" 
+                placeholder="Enter your first name here..." 
+                [ngModel]="userInfo?.firstName"
+                #inputFirstName="ngModel"
+            >
+            </div>
+            <!--<ng-container *ngIf="inputFirstName.touched">
+                <p class="error" *ngIf="inputFirstName.errors?.['minlength']">
+                    First name must be at least 2 characters!
+                </p>
+            </ng-container>-->
+
+            <div class="input-container">
+                <label for="lastName">Last name</label>
+                <input 
+                    type="lastName" 
+                    id="lastName" 
+                    name="lastName" 
+                    placeholder="Enter your last name here..." 
+                    [ngModel]="userInfo?.lastName"
+                    #inputLastName="ngModel" 
+                >
+            </div>
+            <!--<ng-container *ngIf="inputLastName.touched">
+                <p class="error" *ngIf="inputLastName.errors?.['minlength']">
+                    First name must be at least 3 characters!
+                </p>
+            </ng-container>-->
+
+            <div class="input-container">
+                <label for="phone">Your phone number</label>
+                <input 
+                    type="phone" 
+                    id="phone" 
+                    name="phone" 
+                    placeholder="Enter your phone here..." 
+                    [ngModel]="userInfo?.phone"
+                    #inputPhone="ngModel" 
+                >
+            </div>
+            <!--<ng-container *ngIf="inputPhone.touched">
+                <p class="error" *ngIf="inputPhone.errors?.['minlength']">
+                    Phone must be at least 9 characters!
+                </p>
+            </ng-container>-->
+
+
+            <div class="input-container">
+                <label for="address">Your address</label>
+                <input 
+                    type="address" 
+                    id="address" 
+                    name="address" 
+                    placeholder="Enter your address here..." 
+                    [ngModel]="userInfo?.address"
+                    #inputAddress="ngModel" 
+                >
+            </div>
+            <!--<ng-container *ngIf="inputAddress.touched">
+                <p class="error" *ngIf="inputAddress.errors?.['minlength']">
+                    Address must be at least 5 characters!
+                </p>
+            </ng-container>-->
+
+            <div class="profile-btn-container">
+                <button class="submit-btn" (click)="saveProfile(form)">Update</button>
+                <button class="submit-btn" (click)="backToProfile()">Back</button>
+            </div>
+            <ng-container *ngIf="serverMessage!=''">
+                <p class="error">
+                    {{serverMessage}}
+                </p>
+            </ng-container>
+        </form>
+    </div>
 </section>
