@@ -2,10 +2,16 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { UserProfile } from 'firebase/auth';
-import { map, tap } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ProfileUser } from 'src/app/shared/types/userProfile';
 import { NgForm } from '@angular/forms';
+
+import { AngularFireStorage } from "@angular/fire/storage";
+
+import { ImageUploadService } from '../image-upload.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map, finalize } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -62,7 +68,7 @@ import { NgForm } from '@angular/forms';
       state('void', style({
         transform: 'translateX(100%)'
       })),
-      transition('void <=> *', animate('0.5s ease-out'))
+      transition('void <=> *', animate('0.4s ease-out'))
     ]),
   ],
 })
@@ -73,6 +79,13 @@ export class ProfileComponent implements OnInit {
   uid : string = '';
   email: string = '';
   isOpen : boolean = true;
+
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+
+  // selectedFile: File = null;
+  // downloadURL: Observable<string>;
+  // fb;
 
   // getUserEmail() : string | null{
   //   return this.auth.getUserEmail();
@@ -89,6 +102,7 @@ export class ProfileComponent implements OnInit {
     lastName: '',
     phone: '',
     address: '',
+    photoURL: '',
   };
   //currentUserUid: string = '';
 
@@ -101,6 +115,8 @@ export class ProfileComponent implements OnInit {
    // private usersService: UsersService,
     private auth: AuthService,
     private router: Router,
+    //private storage: AngularFirestore,
+    private imageUploadService: ImageUploadService,
   ) {}
 
   ngOnInit(): void {
@@ -135,6 +151,35 @@ export class ProfileComponent implements OnInit {
     // });
 
     
+  }
+
+  // onFileSelected(event) {
+  //   var n = Date.now();
+  //   const file = event.target.files[0];
+  //   const filePath = `RoomsImages/${n}`;
+  //   const fileRef = this.storage.ref(filePath);
+  //   const task = this.storage.upload(`RoomsImages/${n}`, file);
+  //   task
+  //     .snapshotChanges()
+  //     .pipe(
+  //       finalize(() => {
+  //         this.downloadURL = fileRef.getDownloadURL();
+  //         this.downloadURL.subscribe(url => {
+  //           if (url) {
+  //             this.fb = url;
+  //           }
+  //           console.log(this.fb);
+  //         });
+  //       })
+  //     )
+  //     .subscribe(url => {
+  //       if (url) {
+  //         console.log(url);
+  //       }
+  //     });
+  // }
+  upload(event){
+
   }
 
   editProfile(){
