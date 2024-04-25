@@ -6,9 +6,9 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { ProfileUser } from 'src/app/shared/types/userProfile';
 import { NgForm } from '@angular/forms';
 
-import { AngularFireStorage } from "@angular/fire/storage";
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
-import { ImageUploadService } from '../image-upload.service';
+//import { ImageUploadService } from '../image-upload.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
@@ -78,22 +78,11 @@ export class ProfileComponent implements OnInit {
   userInfo: any = []; 
   uid : string = '';
   email: string = '';
+  url : string = '';
   isOpen : boolean = true;
 
-  ref: AngularFireStorageReference;
-  task: AngularFireUploadTask;
 
-  // selectedFile: File = null;
-  // downloadURL: Observable<string>;
-  // fb;
 
-  // getUserEmail() : string | null{
-  //   return this.auth.getUserEmail();
-  // }
-
-  // getUserUid(){
-  //   return this.auth.getCurrentUserUid();
-  // }
 
   profileObj : ProfileUser = {
     uid: '',
@@ -115,8 +104,8 @@ export class ProfileComponent implements OnInit {
    // private usersService: UsersService,
     private auth: AuthService,
     private router: Router,
-    //private storage: AngularFirestore,
-    private imageUploadService: ImageUploadService,
+    private storage: AngularFireStorage,
+    //private imageUploadService: ImageUploadService,
   ) {}
 
   ngOnInit(): void {
@@ -128,30 +117,11 @@ export class ProfileComponent implements OnInit {
       this.email = user?.email;
   });
   
-
-    // this.auth.getUserProfile(this.userInfo.uid).subscribe({
-    //   next: (user) => this.userInfo = user,
-    //   error: (err) => this.serverMessage = err.message
-    // })
-
-
-    // this.auth.getCurrentUserUid().subscribe({
-    //   next: uid => {
-    //     this.uid = uid;
-        //console.log(this.currentUserUid)
-          this.auth.getUserProfile(this.uid).subscribe({
-            next: (user) => this.userInfo = user,
-            error: (err) => this.serverMessage = err.message
-          })
-     // },
-    //   error: err => {
-    //     //console.error('Error getting current user UID:', err);
-    //     this.serverMessage = err.message;
-    //   }
-    // });
-
-    
-  }
+  this.auth.getUserProfile(this.uid).subscribe({
+    next: (user) => this.userInfo = user,
+    error: (err) => this.serverMessage = err.message
+  })
+}
 
   // onFileSelected(event) {
   //   var n = Date.now();
@@ -178,8 +148,40 @@ export class ProfileComponent implements OnInit {
   //       }
   //     });
   // }
-  upload(event){
+  async upload(event: any){
+    const file = event.target.files[0]
+    if(file){
+      const path = `yt/${file.name}`;
+      const uploadTask =await this.storage.upload(path, file);
+      this.url = await uploadTask.ref.getDownloadURL();
+      this.profileObj.photoURL = this.url;
+      console.log('this.url in upload function: ' + this.url)
+    }
+  }
 
+  saveProfilePicture(){
+    console.log('profileObj: ' + this.profileObj.photoURL)
+    //setDoc(cityRef, { capital: true }, { merge: true });
+    //     const washingtonRef = doc(db, "cities", "DC");
+
+    // // Set the "capital" field of the city 'DC'
+    // await updateDoc(washingtonRef, {
+    //   capital: true
+    // });
+    console.log('this.url: ' + this.url)
+    if(this.url === ''){
+      this.serverMessage = 'Pls, attach picture!';
+      return;
+    }
+
+    this.auth.updateProfileDocument(this.uid, this.url)
+    .subscribe({
+      next: () => {
+        this.isOpen = false;
+      },
+      error: (err) => this.serverMessage = err.message
+    });
+  
   }
 
   editProfile(){
@@ -216,19 +218,8 @@ export class ProfileComponent implements OnInit {
       next: () => this.isOpen = true ,
       error: (err) => this.serverMessage = err.message
     })
-    // .then(() => {
-    //   console.log(this.profileObj)
-    //   //this.resetForm();
-    //   this.router.navigate(['/company/company-list']);
-    // }, err => {
-    //   console.log(err.message);
-    //   this.serverMessage = err.message;
-    // } );
   }
 
-  // toggle() {
-  //   this.isOpen = !this.isOpen;
-  // }
 
   backToProfile(){
     this.auth.getUserProfile(this.uid).subscribe({

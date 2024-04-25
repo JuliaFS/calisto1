@@ -49,9 +49,20 @@
     border: 1px solid red;
 }
 .img-container{
-    border-radius: 50%;
+   /* border-radius: 50%;*/
     border: 3px solid aliceblue;
     overflow: hidden;
+}
+
+.img-container>input{
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid green;
+}
+
+.img-container>img{
+    display: block;
+    height: 100px;
 }
 
 .profile-info-container{

@@ -182,6 +182,18 @@ export class AuthService {
       return from(this.afStore.collection('users').doc(uid).set(data));
     }
 
+
+    // const washingtonRef = doc(db, "cities", "DC");
+
+    // // Set the "capital" field of the city 'DC'
+    //   await updateDoc(washingtonRef, {
+    //     capital: true
+    //   });
+    updateProfileDocument(uid: string, photoURL: string): Observable<any> {
+      // Set up Firestore document for user
+      return from(this.afStore.collection('users').doc(uid).update({photoURL}));
+    }
+
     getUserProfile(id: string): Observable<any>{
         return from(this.afStore.collection('users').doc(id).valueChanges());
     }

@@ -7,8 +7,14 @@
             <div>
                 <div class="img-container">
                     <input type="file" (change)="upload($event)" accept=".png,.jpg" />
-                    <img [src]="userInfo.photoURL ?? '../../../assets/profile.png'">
+                    <img [src]="userInfo?.photoURL ?? '../../../assets/profile.png'">
+                    <button (click)="saveProfilePicture()">Save picture</button>
                 </div>
+                <ng-container *ngIf="serverMessage!=''">
+                    <p class="error">
+                        {{serverMessage}}
+                    </p>
+                </ng-container>
 
 
 
