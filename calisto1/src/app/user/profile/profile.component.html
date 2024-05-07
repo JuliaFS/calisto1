@@ -6,9 +6,10 @@
         <section class="profile-section">
             <div>
                 <div class="img-container">
+                    <img [src]="userInfo.photoURL ?? '../../../assets/profile.png'">
                     <input type="file" (change)="upload($event)" accept=".png,.jpg" />
-                    <img [src]="userInfo?.photoURL ?? '../../../assets/profile.png'">
-                    <button (click)="saveProfilePicture()">Save picture</button>
+                    
+                    <button class="submit-btn" (click)="saveProfilePicture()">Save picture</button>
                 </div>
                 <ng-container *ngIf="serverMessage!=''">
                     <p class="error">
@@ -44,11 +45,11 @@
 
             </div>
             <section class="profile-info-container">
-                <p>Nickname: <span class="bold">{{userInfo?.displayName}}</span></p>
-                <p>First name: <span class="bold">{{userInfo?.firstName}}</span></p>
-                <p>Last name: <span class="bold">{{userInfo?.lastName}}</span></p>
-                <p>Phone: <span class="bold">{{userInfo?.phone}}</span></p>
-                <p>Address: <span class="bold">{{userInfo?.address}}</span></p>
+                <p>Nickname: <span class="bold">{{userInfo.displayName}}</span></p>
+                <p>First name: <span class="bold">{{userInfo.firstName}}</span></p>
+                <p>Last name: <span class="bold">{{userInfo.lastName}}</span></p>
+                <p>Phone: <span class="bold">{{userInfo.phone}}</span></p>
+                <p>Address: <span class="bold">{{userInfo.address}}</span></p>
             </section>
         </section>
         <div class="profile-btn">
@@ -70,14 +71,6 @@
                 disabled="disabled"
             >
             </div>
-        <!-- <ng-container *ngIf="inputEmail.touched">
-                <p class="error" *ngIf="inputEmail.errors?.['required']">
-                    Email is required!
-                </p>
-                <p class="error" *ngIf="inputEmail.errors?.['emailValidator']">
-                    Email is not valid!
-                </p>
-            </ng-container>-->
             <div class="input-container">
                 <label for="displayName">Display name</label>
                 <input 
@@ -85,16 +78,10 @@
                     id="displatName" 
                     name="displayName" 
                     placeholder="Enter your nickname here..."
-                    [ngModel]="userInfo?.displayName" 
+                    [ngModel]="userInfo.displayName" 
                     #inputDisplayName="ngModel" 
                 >
             </div>
-
-           <!-- <ng-container *ngIf="inputDisplayName.touched">
-                <p class="error" *ngIf="inputDisplayName.errors?.['minlength']">
-                    Nickname must be at least 3 characters!
-                </p>
-            </ng-container>-->
 
             <div class="input-container">
                 <label for="firstName">First name</label>
@@ -103,15 +90,10 @@
                 id="firstName" 
                 name="firstName" 
                 placeholder="Enter your first name here..." 
-                [ngModel]="userInfo?.firstName"
+                [ngModel]="userInfo.firstName"
                 #inputFirstName="ngModel"
             >
             </div>
-            <!--<ng-container *ngIf="inputFirstName.touched">
-                <p class="error" *ngIf="inputFirstName.errors?.['minlength']">
-                    First name must be at least 2 characters!
-                </p>
-            </ng-container>-->
 
             <div class="input-container">
                 <label for="lastName">Last name</label>
@@ -120,15 +102,10 @@
                     id="lastName" 
                     name="lastName" 
                     placeholder="Enter your last name here..." 
-                    [ngModel]="userInfo?.lastName"
+                    [ngModel]="userInfo.lastName"
                     #inputLastName="ngModel" 
                 >
             </div>
-            <!--<ng-container *ngIf="inputLastName.touched">
-                <p class="error" *ngIf="inputLastName.errors?.['minlength']">
-                    First name must be at least 3 characters!
-                </p>
-            </ng-container>-->
 
             <div class="input-container">
                 <label for="phone">Your phone number</label>
@@ -137,16 +114,10 @@
                     id="phone" 
                     name="phone" 
                     placeholder="Enter your phone here..." 
-                    [ngModel]="userInfo?.phone"
+                    [ngModel]="userInfo.phone"
                     #inputPhone="ngModel" 
                 >
             </div>
-            <!--<ng-container *ngIf="inputPhone.touched">
-                <p class="error" *ngIf="inputPhone.errors?.['minlength']">
-                    Phone must be at least 9 characters!
-                </p>
-            </ng-container>-->
-
 
             <div class="input-container">
                 <label for="address">Your address</label>
@@ -155,15 +126,10 @@
                     id="address" 
                     name="address" 
                     placeholder="Enter your address here..." 
-                    [ngModel]="userInfo?.address"
+                    [ngModel]="userInfo.address"
                     #inputAddress="ngModel" 
                 >
             </div>
-            <!--<ng-container *ngIf="inputAddress.touched">
-                <p class="error" *ngIf="inputAddress.errors?.['minlength']">
-                    Address must be at least 5 characters!
-                </p>
-            </ng-container>-->
 
             <div class="profile-btn-container">
                 <button class="submit-btn" (click)="saveProfile(form)">Update</button>

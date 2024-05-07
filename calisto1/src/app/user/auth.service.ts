@@ -21,7 +21,7 @@ import {
 //import { AngularFireAuth } from '@angular/fire/compat/auth';
 //import { FirebaseError } from 'firebase/app';
 
-import { BehaviorSubject, Observable, catchError, from, map, of, switchMap, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, from, map, merge, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../shared/types/user';
 import { ProfileUser } from '../shared/types/userProfile';
 
@@ -177,11 +177,22 @@ export class AuthService {
     // }
     //..............................................
 
-  createUserProfileDocument(uid: string, data: ProfileUser): Observable<any> {
-      // Set up Firestore document for user
-      return from(this.afStore.collection('users').doc(uid).set(data));
+    //---------------------
+  // createUserProfileDocument(uid: string, data: ProfileUser): Observable<any> {
+  //     // Set up Firestore document for user
+  //     return from(this.afStore.collection('users').doc(uid).set(data));
+  //   }
+      createProfile(uid: string, data: ProfileUser){
+     // company.id = this.afs.createId();
+      data.uid = uid;
+      
+      return from(this.afStore.collection('/profiles').doc(uid).set(data));
     }
-
+    //----------------------------------
+      getProfile(uid : string){
+      return from(this.afStore.collection('profiles').doc(uid).valueChanges());
+    }
+    //------------------------
 
     // const washingtonRef = doc(db, "cities", "DC");
 
@@ -189,9 +200,22 @@ export class AuthService {
     //   await updateDoc(washingtonRef, {
     //     capital: true
     //   });
-    updateProfileDocument(uid: string, photoURL: string): Observable<any> {
+    updateProfilePicture(uid: string, data: ProfileUser): Observable<any> {
       // Set up Firestore document for user
-      return from(this.afStore.collection('users').doc(uid).update({photoURL}));
+     //return from(this.afStore.collection('users').doc(uid).update(photoURL));
+
+          //update profile picture
+      return from(this.afStore.collection('profiles').doc(uid).update(data));
+    
+    }
+
+    updateProfileDocument(uid: string, data: ProfileUser ){
+      return from(this.afStore.collection('profiles').doc(uid).update(data));
+    }
+
+     //update company 2
+     update(id: string, data: any): Promise<void> {
+      return this.afStore.collection('Companies').doc(id).update(data);
     }
 
     getUserProfile(id: string): Observable<any>{

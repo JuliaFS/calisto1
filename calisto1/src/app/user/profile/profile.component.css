@@ -8,7 +8,7 @@
 }
 
 .profile-info-container p{
-    border-bottom: 2px solid aliceblue;
+    border-bottom: 2px solid #4257a2;
 }
 
 .profile-info, .profile-container{
@@ -26,8 +26,15 @@
 }
 
 .profile-header{
-    padding: 10% 2% 2% 2%;
-    border-bottom: 3px solid aliceblue;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.profile-header h1{
+    padding: 10% 2% 4% 2%;
+    border-bottom: 3px solid #4257a2;
+    width: 54%;
     text-transform: uppercase;
 }
 .profile-section{
@@ -36,7 +43,6 @@
     align-items: center;
     width: 100%;
     justify-content: space-evenly;
-    border-bottom: 3px dotted aliceblue;
     padding-bottom: 20px;
 }
 
@@ -46,21 +52,32 @@
     align-items: center;
     justify-content: center;
     padding: 3%;
-    border: 1px solid red;
+    border: 2px solid #4257a2;
 }
 .img-container{
-   /* border-radius: 50%;*/
-    border: 3px solid aliceblue;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
 .img-container>input{
     display: block;
     margin-bottom: 10px;
-    border: 1px solid green;
 }
 
 .img-container>img{
+    display: block;
+    border-radius: 20%;
+    height: 220px;
+}
+
+.submit-btn{
+    width: 80%;
+}
+
+.profile-info-container>img{
     display: block;
     height: 100px;
 }
@@ -86,12 +103,3 @@
 .bold{
     font-weight: bold;
 }
-/*.profile-container{
-    display: flex;
-    gap: 0.5em;
-    flex-direction: row;
-    align-items: center;
-    flex: 0 0 40%;
-    flex-direction: row;
-    border: 3px solid lightgreen;
-}*/

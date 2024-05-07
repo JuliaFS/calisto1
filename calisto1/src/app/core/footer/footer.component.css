@@ -8,6 +8,34 @@
     width: 100%;
 }
 
+.curve{
+    border: 1px solid pink;
+}
+
+.curve::before{
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 100% 50%;
+    width: 55%;
+    height: 100%;
+    background-color: #1d2228;
+    transform: scale(0.5) translate(-100%, -100%);
+    border: 1px solid pink;
+}
+
+.curve::after{
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 100% 50%;
+    width: 55%;
+    height: 40%;
+    bottom: 0;
+    background-color: #ff0066;
+    transform: translate(-4%, 80%);
+}
+
 .footer-page p{
     display: inline-block;
     font-weight: bold;

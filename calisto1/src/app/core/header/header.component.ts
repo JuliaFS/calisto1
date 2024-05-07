@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
      //this.auth.currentAuthStatus$.subscribe(authStatus => this.isAuthenticated = authStatus);
      this.auth.currentAuthStatus$.subscribe(authStatus => {
       this.isAuthenticated = authStatus;
+      console.log(authStatus)
       this.email = authStatus?.email;
   });
   }
