@@ -12,6 +12,7 @@ import { ProfileUser } from 'src/app/shared/types/userProfile';
 import { NgForm } from '@angular/forms';
 
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -41,9 +42,17 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class ProfileComponent implements OnInit {
   uid: string = '';
   email: string = '';
-  url: string = '';
+  //url: string = '';
   isOpen: boolean = true;
   serverMessage: string = '';
+  isLoading: boolean = false;
+  isChoosedPicture: boolean = false;
+
+  ref: any;
+  task: any;
+  uploadProgress: any;
+  downloadURL: any;
+  uploadState: any;
 
   userInfo: ProfileUser = {
     uid: this.uid,
@@ -52,7 +61,7 @@ export class ProfileComponent implements OnInit {
     lastName: '-',
     phone: '-',
     address: '-',
-    photoURL: '-',
+    photoURL: '',
   };
 
   constructor(
@@ -71,6 +80,7 @@ export class ProfileComponent implements OnInit {
 
           this.auth.getProfile(this.uid).subscribe({
             next: (profile) => {
+              console.log('profile: ' + profile)
               if (profile === undefined) {
                 this.auth.createProfile(this.uid, this.userInfo).subscribe({
                   next: () => {},
@@ -88,23 +98,63 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  async upload(event: any) {
+  upload(event: any) {
     const file = event.target.files[0];
-    console.log('file: ' + file);
-    if (file) {
-      const path = `yt/${file.name}`;
-      const uploadTask = await this.storage.upload(path, file);
-      await uploadTask.ref.getDownloadURL().then((url) => {
-        this.url = url;
-      });
-      this.userInfo.photoURL = this.url;
-    }
+    console.log(file);
+    
+    // create a random id
+    const randomId = Math.random().toString(36).substring(2);
+    const filePath = `images/${randomId}-${file.name}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    this.uploadProgress = task.percentageChanges();
+   
+    this.uploadState = task
+      .snapshotChanges()
+      .pipe(
+     finalize(() => {
+          this.downloadURL = fileRef.getDownloadURL();
+
+          this.downloadURL.subscribe( (urlLink : any) => {
+            if (urlLink) {
+              //this.url = urlLink;
+              this.userInfo.photoURL = urlLink;
+              console.log(this.userInfo.photoURL)
+            }
+          });
+        })
+      )
   }
+
+  //upload with promise
+  // async upload(event: any) {
+  //   const file = event.target.files[0];
+  //   console.log('file: ' + file)
+  //   if (file) {
+  //     const path = `yt/${file.name}`;
+  //     const uploadTask = await this.storage.upload(path, file);
+  //     await uploadTask.ref.getDownloadURL().then((url) => {
+  //       this.url = url;
+  //       this.isLoading = false;
+  //     });
+  //     console.log('file: ' + file)
+  //     this.userInfo.photoURL = this.url;
+  //     this.isChoosedPicture = true;
+  //   }
+  //   else {
+  //       this.isLoading = true;
+  //   }
+  // }
 
   saveProfilePicture() {
     this.auth.updateProfilePicture(this.uid, this.userInfo).subscribe({
       next: () => {
+        //if(this.isChoosedPicture){
         this.isOpen = true;
+        //}
+        // else {
+        //   this.serverMessage  = "Pls, attach picture."
+        // }
       },
       error: (err) => (this.serverMessage = err.message),
     });

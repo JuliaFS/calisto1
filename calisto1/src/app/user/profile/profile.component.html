@@ -6,43 +6,39 @@
         <section class="profile-section">
             <div>
                 <div class="img-container">
-                    <img [src]="userInfo.photoURL ?? '../../../assets/profile.png'">
+                    <!--<div *ngIf="!isLoading">-->
+                    <!--</div>-->
+                    <!--<div *ngIf="isLoading">
+                        <app-loader />
+                    </div>-->
+                    <div>
+                        <img [src]="userInfo.photoURL === '' ? '../../../assets/profile.png' : userInfo.photoURL">
+                    </div>
+                    <!--Start percentage-->
                     <input type="file" (change)="upload($event)" accept=".png,.jpg" />
+
+                    <progress max="100" [value]="(uploadProgress | async)"></progress>
+                    <!-- <div class="result" *ngIf="uploadURL | async; let uploadSrc">-->
+                    <div class="result" *ngIf="downloadURL | async; let uploadSrc">
+                    <a [href]="uploadSrc">You just uploaded this file!</a>
+                    </div>
+                    <section class="control-bar" *ngIf="uploadState | async; let state">
+                       <!-- <button (click)="task.pause()" [disabled]="state === 'paused'">Pause</button>
+                        <button (click)="task.cancel()" [disabled]="!(state === 'paused' || state === 'running')">Cancel</button>
+                        <button (click)="task.resume()" [disabled]="state === 'running'">Resume</button>-->
+                      </section> 
+                    <!--end percentage-->
                     
                     <button class="submit-btn" (click)="saveProfilePicture()">Save picture</button>
+                    <div class="result" *ngIf="downloadURL | async; let uploadSrc">
+                        <a [href]="uploadSrc">You just uploaded this file!</a>
+                        </div>
                 </div>
                 <ng-container *ngIf="serverMessage!=''">
                     <p class="error">
                         {{serverMessage}}
                     </p>
                 </ng-container>
-
-
-
-                <!--<div>
-                    <label for="avatar">Choose a profile picture:</label>
-                    <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
-                </div>-->
-
-
-
-                <!--<div class="form-group col-12 image">
-                    <input
-                      type="file"
-                      id="file"
-                      #userPhoto
-                      (change)="onFileSelected($event)"
-                      name="image"
-                      autocomplete="off"
-                    />
-                    <img src="../assets/user.svg" alt="" />
-                  </div>
-                  <div *ngIf="fb" class="list">
-                    <img src="{{ fb }}" alt="" />
-                  </div>-->
-
-
-
             </div>
             <section class="profile-info-container">
                 <p>Nickname: <span class="bold">{{userInfo.displayName}}</span></p>

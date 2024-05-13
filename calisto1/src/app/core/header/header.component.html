@@ -18,8 +18,8 @@
             <ul class="navigation">
                 <li><a routerLink="/company/add-company">Add Company</a></li>
                 <li><a routerLink="/auth/profile">Profile</a></li>
-                <li><a href="">{{email}}</a></li>
-                <li><a (click)="logout()"> Logout</a></li>
+                <li><span class="header-greating">Hi, {{email}}</span></li>
+                <li class="header-logout"><a (click)="logout()">Logout</a></li>
             </ul>
         </div>
     </nav>
