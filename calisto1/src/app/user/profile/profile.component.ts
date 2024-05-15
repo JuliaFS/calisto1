@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Event, Router, RouterEvent } from '@angular/router';
 import {
   trigger,
   state,
@@ -80,7 +80,6 @@ export class ProfileComponent implements OnInit {
 
           this.auth.getProfile(this.uid).subscribe({
             next: (profile) => {
-              console.log('profile: ' + profile)
               if (profile === undefined) {
                 this.auth.createProfile(this.uid, this.userInfo).subscribe({
                   next: () => {},
@@ -99,8 +98,10 @@ export class ProfileComponent implements OnInit {
   }
 
   upload(event: any) {
+    //const target = event.target as HTMLElement;
+      //const files = target.files as FileList;
     const file = event.target.files[0];
-    console.log(file);
+    //const file:FileList | null = event.target.files[0];
     
     // create a random id
     const randomId = Math.random().toString(36).substring(2);
@@ -119,7 +120,6 @@ export class ProfileComponent implements OnInit {
             if (urlLink) {
               //this.url = urlLink;
               this.userInfo.photoURL = urlLink;
-              console.log(this.userInfo.photoURL)
             }
           });
         })
